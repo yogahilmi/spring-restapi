@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import com.tasanah.restapi.models.entities.Product;
+import com.tasanah.restapi.models.entities.Supplier;
 import com.tasanah.restapi.models.repository.ProductRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +41,14 @@ public class ProductService {
 
     public List<Product> findByName(String name){
         return productRepo.findByNameContains(name);
+    }
+
+    public void addSupplier(Supplier supplier, Long productId) {
+        Product product = findOne(productId);
+        if(product == null) {
+            throw new RuntimeException("Product with ID: " +productId+ " not found.");
+        }
+        product.getSuppliers().add(supplier);
+        save(product);
     }
 }

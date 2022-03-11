@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "tbl_supplier")
 public class Supplier implements Serializable {
@@ -29,6 +31,7 @@ public class Supplier implements Serializable {
     private String email;
 
     @ManyToMany(mappedBy = "suppliers")
+    @JsonBackReference
     private Set<Product> products;
 
     public Long getId() {
